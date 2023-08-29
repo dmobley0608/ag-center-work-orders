@@ -50,7 +50,7 @@ export default function WorkOrders() {
                 
                 Create New Work Order
             </button>
-            <h1>{status === "pending"? "Pending Work Orders" : "Completed Work Orders"}</h1>
+            <h1>{status === "completed"? "Completed Work Orders": "Pending Work Orders" }</h1>
             {workOrders.map(order => <WorkOrderCard key={order._id} setOrder={setOrder} order={order} refreshOrders={fetchWorkOrders} completedOrders={false} />)}
             <WorkFormModal
                order={order}
