@@ -16,7 +16,7 @@ exports.sendMessage=( subject, order)=>{
         to:["kmiller@hallcounty.org", "tmobley@hallcounty.org", "asanders@hallcounty.org", "kroberts@hallcounty.org"],
         subject:subject,
         text:'There is a new work order request.',
-        html:`<h1>Ticket Number: <a href="http:localhost:9000/order/${order._id}">${order._id}</a></h1>
+        html:`<h1>Ticket Number: <a href="https://chicopee-ag-fcfd6e4181bf.herokuapp.com/order/${order._id}">${order._id}</a></h1>
         <h4>${order.details}</h4>
         
         Thanks,
