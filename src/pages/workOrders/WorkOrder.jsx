@@ -25,7 +25,15 @@ export default function WorkOrder() {
     }, [id])
     return (
         <div className='text-start p-3'>
-            <h1>{order._id}</h1>
+             <h3 className={`card-title p-1 rounded m-0
+                ${order.priority === 3 ? "bg-danger":""}
+                ${order.priority === 2 ? "bg-warning":""}
+                ${order.priority === 1 ? "bg-info":""} `}>
+                    {order.priority === 3 && "Needs To Be Finished ASAP"}
+                    {order.priority === 2 && "Needs To Be Finished Before The Next Show"}
+                    {order.priority === 1 && "Low Priority"}
+                    </h3>
+            <h1>{order._id}</h1>            
             <h5>Request:</h5>
             <p>{order.details}</p>
             <hr />

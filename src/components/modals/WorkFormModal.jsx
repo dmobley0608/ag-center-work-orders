@@ -17,6 +17,15 @@ export default function WorkFormModal({ setOrder, order, handleSubmit }) {
                 onChange={(e) => setOrder({ ...order, details: e.target.value })} value={order.details ? order.details : ""}></textarea>
             </div>
             <div className="mb-3">
+              <label htmlFor="priority" className="form-label">Priority</label>
+              <select className="form-control" id="priority" onChange={(e) => setOrder({ ...order, priority: e.target.value })} value={order.priority}>
+                <option selected>Please Select An Option</option>
+                <option value={1}>Low Priority</option>
+                <option value={2}>Needs To Be Finished Before The Next Show</option>
+                <option value={3}>Needs To Be Finished ASAP</option>
+              </select>
+            </div>
+            <div className="mb-3">
               <label htmlFor="createdBy" className="form-label">Submitted By</label>
               <select className="form-control" id="createdBy" onChange={(e) => setOrder({ ...order, createdBy: e.target.value })} value={order.createdBy}>
                 <option selected>Please Select An Option</option>

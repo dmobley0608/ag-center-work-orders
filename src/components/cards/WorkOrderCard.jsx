@@ -20,7 +20,15 @@ export default function WorkOrderCard({ setOrder, order, refreshOrders }) {
             
             {order.image && <img src="..." className="card-img-top" alt="..." />}
             <div className="card-body">
-                <h5 className="card-title">Requested On: {new Date(order.createdAt).toDateString()}</h5>
+                <h3 className={`card-title p-1 rounded m-0
+                ${order.priority === 3 ? "bg-danger":""}
+                ${order.priority === 2 ? "bg-warning":""}
+                ${order.priority === 1 ? "bg-info":""} `}>
+                    {order.priority === 3 && "Needs To Be Finished ASAP"}
+                    {order.priority === 2 && "Needs To Be Finished Before The Next Show"}
+                    {order.priority === 1 && "Low Priority"}
+                    </h3>
+                <h5 className="">Requested On: {new Date(order.createdAt).toDateString()}</h5>
                 <p className="card-text"><strong>Work Request:</strong> <br/>{order.details}</p>
                 {status === "completed" &&
                     <>

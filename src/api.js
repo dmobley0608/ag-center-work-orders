@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const client = axios.create({
-    baseURL:"/api/"
+    baseURL:"http://localhost:9000/api/"
 })
 
 export const getWorkOrders = (status) => client.get(`work-orders/${status}`)

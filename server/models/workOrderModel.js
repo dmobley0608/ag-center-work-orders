@@ -12,7 +12,8 @@ const schema = new mongoose.Schema({
     imageUrl: {type:String, default:null},
     imageId:{type:String, default:null},
     comments:[commentSchema],
-    finalized:{type:Boolean, default:false}
+    finalized:{type:Boolean, default:false},
+    priority: {type:Number, default:1}
 })
 
 const WorkOrder = mongoose.model('WorkOrder', schema)
