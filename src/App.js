@@ -7,6 +7,7 @@ import WorkOrder from './pages/workOrders/WorkOrder';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<Root/>} >   
+    <Route path="/" element={<WorkOrders/>}/>
     <Route path='/:status' element={<WorkOrders />}/>
     <Route path="/order/:id" element={<WorkOrder/>}/>
   </Route>

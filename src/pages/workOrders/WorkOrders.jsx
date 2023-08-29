@@ -7,12 +7,16 @@ import { useParams } from 'react-router-dom'
 export default function WorkOrders() {
     const [workOrders, setWorkOrders] = useState([])
     const [order, setOrder] = useState({}) 
-    const { status } = useParams()
+    const { status } = useParams() 
 
     //Get Current Work Orders
     const fetchWorkOrders = async () => {
+        let filter = status
         setWorkOrders([])
-        const res = await getWorkOrders(status)
+        if(!status){
+            filter="pending"
+        }
+        const res = await getWorkOrders(filter)
         setWorkOrders(res.data)
         return res.data
     }
