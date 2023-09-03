@@ -9,6 +9,7 @@ export default function AuthProvider({children}){
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(false)
     const login = async()=>{
+        setUser(null)
         const res = await verifyLoggedIn();
         if(res.status === 200){
             setUser(res.data)

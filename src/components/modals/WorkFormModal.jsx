@@ -1,9 +1,51 @@
 import React from 'react'
 import { useAuth } from '../../api/AuthContext'
+import { useNavigate, useParams } from 'react-router-dom';
+import { addWorkOrder, markWorkOrderComplete } from '../../api/api';
 
-export default function WorkFormModal({ setOrder, order, handleSubmit }) {
-  const auth = useAuth();
-  
+export default function WorkFormModal({ setOrder, order }) {
+  const {user, setIsLoading} = useAuth();
+  const {status} = useParams()
+  const nav = useNavigate()
+
+  //Handle Work Order Submit
+  const handleSubmit = async (e) => {
+    setIsLoading(true)
+    e.preventDefault()
+
+    //Check to see if order already exists
+    if (order.createdAt) {
+      await markWorkOrderComplete(order._id, order)
+        .then(res => {
+          if (res.status === 200) {
+            nav('/pending')
+            setOrder({})
+          } else {
+            nav("/login")
+          }
+        }).catch(err => { nav('/login') })
+      //Create a new order        
+    } else {
+      //Check form checkboxes and assign values to Order
+      const { assignedTo } = e.target
+      for (let checkBox of assignedTo) {
+        if (checkBox.checked) {
+          order.assignedTo.push(checkBox.value)
+        }
+      }
+      await addWorkOrder(order)
+        .then(res => {
+          if (res.status === 200) {
+            nav('/pending')
+            setOrder({})
+          } else {
+            nav("/login")
+          }
+        }).catch(err => { setIsLoading(false); alert(err) })
+    }
+    setIsLoading(false)
+  }
+
   return (
     <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div className="modal-dialog">
@@ -14,7 +56,7 @@ export default function WorkFormModal({ setOrder, order, handleSubmit }) {
           </div>
           {/* Form */}
           <form className="modal-body" onSubmit={(e) => handleSubmit(e)} method='post'>
-            {auth.user && !order.createdAt &&
+            {user && !order.createdAt &&
               <>
                 <div className="mb-3">
                   <label htmlFor="details" className="form-label">Order Details</label>
