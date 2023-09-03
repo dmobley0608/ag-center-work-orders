@@ -13,4 +13,5 @@ export const markWorkOrderFinalized = (id)=> client.put( `work-orders/finalized/
 export const addCommentToWorkOrder = (id, comment)=>client.put(`/work-orders/add-comment/${id}`, comment)
 
 export const login = (user) =>client.post('/user/login', user)
+export const logoutSession = () => client.post('user/logout')
 export const verifyLoggedIn = () => client.get('/user/verify-user')

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { verifyLoggedIn } from "./api";
+import { logoutSession, verifyLoggedIn } from "./api";
 
 export const AuthContext = createContext();
 export const useAuth = ()=>useContext(AuthContext);
@@ -19,9 +19,12 @@ export default function AuthProvider({children}){
         }
     }
 
-    const logout = ()=>{
+    const logout = async()=>{
+        setIsLoading(true)
+        await logoutSession()
         setUser(null);
         setIsAuthenticated(false)
+        setIsLoading(false)
     }
 
     

@@ -31,3 +31,12 @@ exports.verifyUser = (req, res)=>{
         res.redirect('/login')
     }
 } 
+
+exports.logout = async (req, res, next)=>{
+    await req.logout((err)=>{
+        if(err){
+            res.status(500).json(err)
+        }
+    })
+    res.status(200).json("Logged Out")
+}
