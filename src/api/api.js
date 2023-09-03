@@ -1,7 +1,7 @@
 import axios from "axios";
 const url = process.env.REACT_APP_PRODUCTION === true ?"http://localhost:9000/api/":"/api/"
 const client = axios.create({
-    baseURL:"http://localhost:9000/api/"
+    baseURL:"/api/"
 })
 
 export const getWorkOrders = (status) => client.get(`work-orders/${status}`)
