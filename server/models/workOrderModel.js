@@ -1,7 +1,7 @@
 const { default: mongoose, Schema } = require("mongoose");
 
 const commentSchema = new Schema({body:String, date:{type:Date, default:Date.now()}})
-
+const assignedToSchema = new Schema({employee:String})
 const schema = new mongoose.Schema({
     createdAt: {type: Date, default:Date.now()},
     createdBy:{type:String, default: null},
@@ -12,6 +12,7 @@ const schema = new mongoose.Schema({
     imageUrl: {type:String, default:null},
     imageId:{type:String, default:null},
     comments:[commentSchema],
+    assignedTo:[assignedToSchema],
     finalized:{type:Boolean, default:false},
     priority: {type:Number, default:1}
 })

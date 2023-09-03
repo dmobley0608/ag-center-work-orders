@@ -1,7 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { useAuth } from '../../api/AuthContext'
 
 export default function Navbar() {
+    const auth = useAuth()
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid  align-items-center ">
@@ -16,11 +18,25 @@ export default function Navbar() {
                                 <p data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">Pending</p>
                             </NavLink>
                         </li>
-                        <li className="nav-item ">
+                        {auth.user && <li className="nav-item ">
                             <NavLink className="nav-link" to="/completed" >
                                 <p data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">Completed</p>
                             </NavLink>
                         </li>
+                        }
+                        {!auth.user ?
+                            <li className="nav-item ">
+                                <NavLink className="nav-link" to="/login" >
+                                    <p data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">Sign In</p>
+                                </NavLink>
+                            </li>
+                            :
+                            <li className="nav-item ">
+                                <NavLink className="nav-link" to="/login" onClick={auth.logout} >
+                                    <p data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">Sign Out</p>
+                                </NavLink>
+                            </li>
+                        }
                     </ul>
 
                 </div>

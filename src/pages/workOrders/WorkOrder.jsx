@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { addCommentToWorkOrder, getWorkOrderById } from '../../api'
+import { addCommentToWorkOrder, getWorkOrderById } from '../../api/api'
 import { PlusSquareFill } from 'react-bootstrap-icons'
 import CommentModal from '../../components/modals/CommentsModal'
 export default function WorkOrder() {

@@ -24,7 +24,10 @@ exports.getOrderById=async(req,res)=>{
 //Add Work Order
 exports.addWorkOrder = async(req, res)=>{
     try{
-        const order = await WorkOrder.create({...req.body})
+        const submittedOrder = {...req.body}
+        submittedOrder.assignedTo = req.body.assignedTo.map(emp=>({employee:emp}))
+        submittedOrder.createdBy = req.user.username
+        const order = await WorkOrder.create(submittedOrder)
         sendMessage( 'You have work', order)
         res.status(200).json("Work Order Added Successfully")
         
@@ -62,7 +65,7 @@ exports.markOrderNotComplete = async(req, res) =>{
         }
     }catch(err){
         console.log(err)
-        res.status(500).json(err)
+        res.status(500).json(err) 
     }
 }
 
