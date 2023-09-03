@@ -21,9 +21,10 @@ export default function Login() {
                 nav("/pending")
             }else{
                 setErrors(["Invalid Username or Password"])
-            }            
-        }).catch(err=>{setErrors(["Invalid Username or Password"])})
-        auth.setIsLoading(false)
+            }  
+            auth.setIsLoading(false)          
+        }).catch(err=>{alert(err); auth.setIsLoading(false)})
+       
     }
     return (
         <form className='login-page'>
