@@ -7,7 +7,7 @@ import { useAuth } from '../../api/AuthContext'
 
 export default function WorkOrders() {
     const [workOrders, setWorkOrders] = useState([])
-    const [order, setOrder] = useState({ assignedTo: [] })
+    const [order, setOrder] = useState({})
     const { status } = useParams()    
     const { user } = useAuth()
 

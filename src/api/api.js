@@ -11,7 +11,6 @@ export const markWorkOrderComplete = (id, order)=> client.put( `work-orders/${id
 export const markWorkOrderIncomplete = (id, order)=> client.put( `work-orders/decline/${id}`, order)
 export const markWorkOrderFinalized = (id)=> client.put( `work-orders/finalized/${id}`)
 export const addCommentToWorkOrder = (id, comment)=>client.put(`/work-orders/add-comment/${id}`, comment)
-
 export const login = (user) =>client.post('/user/login', user)
 export const logoutSession = () => client.post('user/logout')
 export const verifyLoggedIn = () => client.get('/user/verify-user')

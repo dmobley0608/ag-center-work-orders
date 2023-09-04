@@ -4,15 +4,21 @@ import { addCommentToWorkOrder, getWorkOrderById } from '../../api/api'
 import { PlusSquareFill } from 'react-bootstrap-icons'
 import CommentModal from '../../components/modals/CommentsModal'
 import WorkFormModal from '../../components/modals/WorkFormModal'
+import { useAuth } from '../../api/AuthContext'
+
 export default function WorkOrder() {
     const { id } = useParams()
     const [order, setOrder] = useState({})
-    const [comment, setComment] = useState("")   
+    const [comment, setComment] = useState("") 
+    
+
     const getOrderById = async () => {
+        
         const res = await getWorkOrderById(id)
         if (res.status === 200) {
             setOrder({ ...res.data })          
         }
+        
     }
     const handleSubmit = async () => {
         await addCommentToWorkOrder(id, { comment })
@@ -37,6 +43,8 @@ export default function WorkOrder() {
             <h5>Request:</h5>
             <p>{order.details}</p>
             <hr />
+            <h5>Assigned To: {order.assignedTo && order.assignedTo.map(worker=>`${worker.employee.toUpperCase()} / `)} </h5>
+            <hr/>
             <h6>Created By: {order.createdBy}</h6>
             <h6>Created On: {new Date(order.createdAt).toDateString()}</h6>
             <hr />

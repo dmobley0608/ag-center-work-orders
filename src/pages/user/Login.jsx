@@ -30,13 +30,13 @@ export default function Login() {
         <form className='login-page'>
             <h1>Login</h1>
             {errors.map(err=>  <p className='text-danger'>{err}</p>)}           
-            <div class="mb-3">
-                <label htmlFor="username" class="form-label" >Username</label>
-                <input type="text" class="form-control" id="username" onChange={(e)=>setUsername(e.target.value)} />
+            <div className="mb-3">
+                <label htmlFor="username" className="form-label" >Username</label>
+                <input type="text" className="form-control" id="username" onChange={(e)=>setUsername(e.target.value)} autoComplete='username' />
             </div>
-            <div class="mb-3">
-                <label htmlFor="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" onChange={(e)=>setPassword(e.target.value)} />
+            <div className="mb-3">
+                <label htmlFor="password" className="form-label">Password</label>
+                <input type="password" className="form-control" id="password" onChange={(e)=>setPassword(e.target.value)} autoComplete='current-password' />
             </div>
             <button className='btn btn-success' onClick={handleLogin}>Login</button>
         </form>

@@ -14,7 +14,7 @@ export default function CommentModal({ setComment, comment, handleSubmit }) {
             <div className="mb-3">
               <label htmlFor="comments" className="form-label">Comment</label>
               <textarea type="comments" className="form-control" id="comments"
-                onChange={(e) => setComment(e.target.value)} ></textarea>
+                onChange={(e) => setComment(e.target.value)} >{comment}</textarea>
             </div>
             
             

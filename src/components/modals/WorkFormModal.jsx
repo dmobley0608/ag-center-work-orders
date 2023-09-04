@@ -65,8 +65,8 @@ export default function WorkFormModal({ setOrder, order }) {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="priority" className="form-label">Priority</label>
-                  <select className="form-control" id="priority" defaultValue={1} onChange={(e) => setOrder({ ...order, priority: e.target.value })} value={order.priority}>
-                    <option >Please Select An Option</option>
+                  <select className="form-control" id="priority"  onChange={(e) => setOrder({ ...order, priority: e.target.value })} value={order.priority || ""}>
+                    <option value={""} >Please Select An Option</option>
                     <option value={1}>Low Priority</option>
                     <option value={2}>Needs To Be Finished Before The Next Show</option>
                     <option value={3}>Needs To Be Finished ASAP</option>
@@ -77,31 +77,31 @@ export default function WorkFormModal({ setOrder, order }) {
                   <div className='d-flex flex-column justify-content-start align-items-start flex-wrap mx-auto' style={{ maxHeight: '100px', width: '200px' }}>
                     <div className="form-check" style={{ maxWidth: '100px' }}>
                       <input className="form-check-input" type="checkbox" name='assignedTo' value="adam" id="flexCheckChecked" />
-                      <label className="form-check-label" for="flexCheckChecked">
+                      <label className="form-check-label" htmlFor="flexCheckChecked">
                         Adam
                       </label>
                     </div>
                     <div className="form-check" style={{ maxWidth: '100px' }}>
                       <input className="form-check-input" type="checkbox" name='assignedTo' value="kiser" id="flexCheckChecked" />
-                      <label className="form-check-label" for="flexCheckChecked">
+                      <label className="form-check-label" htmlFor="flexCheckChecked">
                         Kieser
                       </label>
                     </div>
                     <div className="form-check" style={{ maxWidth: '100px' }}>
                       <input className="form-check-input" type="checkbox" name='assignedTo' value="peyton" id="flexCheckChecked" />
-                      <label className="form-check-label" for="flexCheckChecked">
+                      <label className="form-check-label" htmlFor="flexCheckChecked">
                         Peyton
                       </label>
                     </div>
                     <div className="form-check" style={{ maxWidth: '100px' }}>
                       <input className="form-check-input " type="checkbox" name='assignedTo' value="dwight" id="flexCheckChecked" />
-                      <label className="form-check-label" for="flexCheckChecked">
+                      <label className="form-check-label" htmlFor="flexCheckChecked">
                         Dwight
                       </label>
                     </div>
                     <div className="form-check" style={{ maxWidth: '100px' }}>
                       <input className="form-check-input" type="checkbox" name='assignedTo' value="khip" id="flexCheckChecked" />
-                      <label className="form-check-label" for="flexCheckChecked">
+                      <label className="form-check-label" htmlFor="flexCheckChecked">
                         Khip
                       </label>
                     </div>
@@ -115,8 +115,8 @@ export default function WorkFormModal({ setOrder, order }) {
             {order.createdAt &&
               <div className="mb-3">
                 <label htmlFor="completedBy" className="form-label">Completed By</label>
-                <select className="form-control" id="completedBy" defaultValue={-1} onChange={(e) => setOrder({ ...order, completedBy: e.target.value })} value={order.completedBy}>
-                  <option >Please Select An Option</option>
+                <select className="form-control" id="completedBy"  onChange={(e) => setOrder({ ...order, completedBy: e.target.value })} value={order.completedBy || ""}>
+                  <option vlaue={""} >Please Select An Option</option>
                   <option value={"K. Miller"}>Khip</option>
                   <option value={"D. Mobley"}>Dwight</option>
                   <option value={"A. Sanders"}>Adam</option>
