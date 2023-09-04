@@ -10,23 +10,22 @@ const transporter = nodemailer.createTransport({
     secure:true
 })
 
-exports.sendMessage=( subject, order)=>{
-    let emailTo = []
-    if(order.assignedTo.filter(emp=>emp.employee === 'khip').length > 0){emailTo.push('kmiller@hallcounty.org')}
-    if(order.assignedTo.filter(emp=>emp.employee === 'dwight').length > 0){emailTo.push('tmobley@hallcounty.org')}
+exports.sendMessage=(subject, order)=>{
+    let emailTo = ["tmobley@hallcounty.org", "kmiller@hallcounty.org"]  
     if(order.assignedTo.filter(emp=>emp.employee === 'adam').length > 0){emailTo.push('asanders@hallcounty.org')}
     if(order.assignedTo.filter(emp=>emp.employee === 'kiser').length > 0){emailTo.push('kroberts@hallcounty.org')}
+    
     const mailData = {
-        from:'Chicopee Woods Work Order Request',
+        from:'info@chicoppework.com',
         to:emailTo,
-        subject:subject,
-        text:'There is a new work order request.',
+        subject:subject,       
         html:`<h1>Ticket Number: <a href="https://chicopee-ag-fcfd6e4181bf.herokuapp.com/order/${order._id}">${order._id}</a></h1>
-        <h4>${order.details}</h4>
-        
+        <h4>${order.details}</h4>       
         Thanks,
         <h3>${order.createdBy}</h3>
-        <h6>Created On:${order.createdAt}</h6>`
+        <h6>Created On:${order.createdAt}</h6>
+        ${order.comments ?"Comments: " + order.comments.map(comment=>"<br><hr>" + comment.body +'<br>' + comment.date) + "<hr>":""}
+        `
     }
 
     transporter.sendMail(mailData,(err, info)=>{
