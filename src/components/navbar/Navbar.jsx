@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { useAuth } from '../../api/AuthContext'
 
 export default function Navbar() {
-    const auth = useAuth()
+    const auth = useAuth()    
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid  align-items-center ">

@@ -10,14 +10,16 @@ export default function AuthProvider({children}){
     const [isLoading, setIsLoading] = useState(false)
     const login = async()=>{
         setUser(null)
+        try{
         const res = await verifyLoggedIn();
-        if(res.status === 200){
+        if(res.status === 200){            
             setUser(res.data)
             setIsAuthenticated(true)
             return true
         }else{
             return false;
         }
+    }catch(err){}
     }
 
     const logout = async()=>{
