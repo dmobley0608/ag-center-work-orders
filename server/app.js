@@ -13,7 +13,7 @@ const workOrderRouter = require('./routes/workOrderRoutes');
 //Database
 const mongoose = require('mongoose');
 const userRouter = require('./routes/userRoutes');
-mongoose.connect(`${process.env.DATABASE_CONNECTION_STRING}`) 
+mongoose.connect(`${process.env.DATABASE_CONNECTION_STRING}`)   
 
 //App Config
 const app = express();

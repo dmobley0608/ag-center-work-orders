@@ -26,10 +26,9 @@ exports.register = async (req, res) => {
 
 exports.verifyUser = (req, res)=>{
     if(req.user){
-        res.status(200).json(req.user)
-    }else{
-        res.redirect('/login')
+       return res.status(200).json(req.user)
     }
+    return res.status(401).send("User not logged in")
 } 
 
 exports.logout = async (req, res, next)=>{
