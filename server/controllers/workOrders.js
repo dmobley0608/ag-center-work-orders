@@ -36,6 +36,23 @@ exports.addWorkOrder = async (req, res) => {
         res.status(500).json(err)
     }
 }
+
+//Edit Work Order
+exports.editOrder = async(req,res)=>{
+    try {
+        const {id} = req.params
+        const submittedOrder = req.body 
+        submittedOrder.assignedTo = req.body.assignedTo.map(emp => ({ employee: emp }))        
+        const order = await WorkOrder.findById(id)
+        await order.updateOne({...submittedOrder})
+        sendMessage('A Work Order Has Been Updated', order)
+        res.status(200).json("Work Order Updated Successfully")
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+}
 //Mark Completed
 exports.markOrderComplete = async (req, res) => {
     try {

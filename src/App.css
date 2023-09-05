@@ -13,3 +13,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.comment-container{
+  position: relative;
+}
+
+.comment-count{
+  position: absolute;
+  left:17px;
+  top:8px;
+  font-weight: bolder;
+}

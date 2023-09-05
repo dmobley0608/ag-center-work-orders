@@ -18,7 +18,7 @@ export default function WorkOrders() {
         if (!status) {
             filter = "pending"
         }
-        const res = await getWorkOrders(filter)
+        const res = await getWorkOrders(filter)        
         setWorkOrders(res.data)
         return res.data
     }
