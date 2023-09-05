@@ -9,12 +9,10 @@ export default function WorkFormModal({ setOrder, order }) {
   const nav = useNavigate()
 
   //Handle Work Order Submit
-  const handleSubmit = async (values) => {   
-    values._id = null
-    setIsLoading(true)
-    console.log(values)
-    // Check to see if order already exists
-    if (order.__id) {
+  const handleSubmit = async (values) => {       
+    setIsLoading(true)   
+    // Check to see if order already exists    
+    if(values._id) {      
       await editWorkOrder(order._id, values)
         .then(res => {
           if (res.status === 200) {
@@ -26,7 +24,6 @@ export default function WorkFormModal({ setOrder, order }) {
         }).catch(err => { nav('/login') })
       //Create a new order        
     } else {      
-      
       await addWorkOrder(values)
         .then(res => {
           if (res.status === 200) {

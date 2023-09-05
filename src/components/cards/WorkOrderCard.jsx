@@ -82,7 +82,7 @@ export default function WorkOrderCard({ setOrder, order, refreshOrders }) {
                     </>
                 }
                 {!order.approved && status !== "completed" ?
-                    <button className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => setOrder({ ...order })}>Mark Completed</button>
+                    <button className="btn btn-success" data-bs-toggle="modal" data-bs-target="#markCompleteModal" onClick={() => setOrder({ ...order })}>Mark Completed</button>
                     :
                     <div className='d-flex w-100 justify-content-evenly'>
                         <button className='btn btn-danger' onClick={() => markIncomplete(order._id)}>Send Back</button>

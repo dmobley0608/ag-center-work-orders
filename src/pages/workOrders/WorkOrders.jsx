@@ -4,6 +4,7 @@ import WorkOrderCard from '../../components/cards/WorkOrderCard'
 import WorkFormModal from '../../components/modals/WorkFormModal'
 import { useParams } from 'react-router-dom'
 import { useAuth } from '../../api/AuthContext'
+import WorkFormMarkCompletedModal from '../../components/modals/WorkFormMarkCompletedModal'
 
 export default function WorkOrders() {
     const [workOrders, setWorkOrders] = useState([])
@@ -44,6 +45,7 @@ export default function WorkOrders() {
                 setOrder={setOrder}                
                 status={status}
             />
+            <WorkFormMarkCompletedModal order={order}/>
         </div>
     )
 }

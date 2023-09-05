@@ -23,6 +23,7 @@ exports.getOrderById = async (req, res) => {
 }
 //Add Work Order
 exports.addWorkOrder = async (req, res) => {
+    
     try {
         const submittedOrder = { ...req.body }
         submittedOrder.assignedTo = req.body.assignedTo.map(emp => ({ employee: emp }))
@@ -39,6 +40,7 @@ exports.addWorkOrder = async (req, res) => {
 
 //Edit Work Order
 exports.editOrder = async(req,res)=>{
+   
     try {
         const {id} = req.params
         const submittedOrder = req.body 
@@ -91,8 +93,7 @@ exports.addComment = async (req, res) => {
         const { id } = req.params
         const order = await WorkOrder.findById(id)        
         if (order) {
-            order.comments.push({ body: req.body.comment })
-           
+            order.comments.push({ body: req.body.comment })           
             await order.save()    
             console.log('sending message')
             sendMessage('There is a new comment for the following work order', order)        
