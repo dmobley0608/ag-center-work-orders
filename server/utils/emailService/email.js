@@ -11,9 +11,10 @@ const transporter = nodemailer.createTransport({
 })
 
 exports.sendMessage=(subject, order)=>{
-    let emailTo = ["tmobley@hallcounty.org"]  
+    let emailTo = ["kmiller@hallcounty.org","tmobley@hallcounty.org"]  
     if(order.assignedTo.filter(emp=>emp.employee === 'adam').length > 0){emailTo.push('asanders@hallcounty.org')}
     if(order.assignedTo.filter(emp=>emp.employee === 'kiser').length > 0){emailTo.push('kroberts@hallcounty.org')}
+     if(order.assignedTo.filter(emp=>emp.employee === 'peyton').length > 0){emailTo.push('pblack@hallcounty.org')}
     
     const mailData = {
         from:'info@chicoppework.com',
