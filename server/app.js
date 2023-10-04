@@ -17,6 +17,7 @@ mongoose.connect(`${process.env.DATABASE_CONNECTION_STRING}`)
 
 //App Config
 const app = express();
+const expressWs = require('express-ws')(app);
 app.use(cors({
 origin:'*'
 }))
@@ -51,6 +52,17 @@ app.use(passport.authenticate('session'))
 
 app.use('/api/work-orders', workOrderRouter)
 app.use('/api/user', userRouter)
+
+app.ws('/ws',async (ws, req)=>{
+   
+    ws.on('message',async(msg)=>{
+        const orders = await WorkOrder.find({ completed: false, finalized: false }).sort("-priority")
+        ws.send(JSON.stringify({orders:[...orders]}))
+    });
+    ws.on('open',()=>{
+        ws.send('welcome')
+    })
+})
 
 //Redirect to Frontend
 app.use('/*', (req, res)=>{

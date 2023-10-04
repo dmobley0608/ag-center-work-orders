@@ -3,7 +3,9 @@ const { getOrderByStatus, addWorkOrder, markOrderComplete, markOrderNotComplete,
 const { checkUser } = require('../utils/auth');
 
 
-const workOrderRouter = express();
+const workOrderRouter = express.Router();
+
+
 
 
 workOrderRouter.get('/:status', getOrderByStatus)
