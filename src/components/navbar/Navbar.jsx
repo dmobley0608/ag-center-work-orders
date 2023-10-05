@@ -18,6 +18,11 @@ export default function Navbar() {
                                 <p data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">Pending</p>
                             </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link " aria-current="page" to="/inventory" >
+                                <p data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">Inventory</p>
+                            </NavLink>
+                        </li>
                         {auth.user && <li className="nav-item ">
                             <NavLink className="nav-link" to="/completed" >
                                 <p data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">Completed</p>

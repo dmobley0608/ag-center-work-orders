@@ -9,10 +9,11 @@ const MongoStore = require('connect-mongo');
 const  WorkOrder = require('./models/workOrderModel');
 //Routers
 const workOrderRouter = require('./routes/workOrderRoutes');
-
+const inventoryRouter = require('./routes/inventoryRoutes')
+const userRouter = require('./routes/userRoutes');
 //Database
 const mongoose = require('mongoose');
-const userRouter = require('./routes/userRoutes');
+
 mongoose.connect(`${process.env.DATABASE_CONNECTION_STRING}`)   
 
 //App Config
@@ -51,7 +52,7 @@ app.use(passport.authenticate('session'))
 
 app.use('/api/work-orders', workOrderRouter)
 app.use('/api/user', userRouter)
-app.use('/api/inventory')
+app.use('/api/inventory', inventoryRouter)
 
 //Redirect to Frontend
 app.use('/*', (req, res)=>{

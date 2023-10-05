@@ -4,6 +4,7 @@ const client = axios.create({
     baseURL:"/api/"
 })
 
+//Work Orders
 export const getWorkOrders = (status) => client.get(`work-orders/${status}`)
 export const getWorkOrderById = (id) => client.get(`work-orders/work-order/${id}`)
 export const addWorkOrder = (order)=> client.post("work-orders", order)
@@ -12,6 +13,12 @@ export const markWorkOrderComplete = (id, order)=> client.put( `work-orders/${id
 export const markWorkOrderIncomplete = (id, order)=> client.put( `work-orders/decline/${id}`, order)
 export const markWorkOrderFinalized = (id)=> client.put( `work-orders/finalized/${id}`)
 export const addCommentToWorkOrder = (id, comment)=>client.put(`/work-orders/add-comment/${id}`, comment)
+
+//Inventory
+export const getInventoryItems = ()=>client.get('inventory/')
+export const editInventoryItem = (id)=>client.put(`inventory/${id}`)
+
+//User
 export const login = (user) =>client.post('/user/login', user)
 export const logoutSession = () => client.post('user/logout')
 export const verifyLoggedIn = () => client.get('/user/verify-user')
