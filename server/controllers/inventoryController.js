@@ -40,7 +40,7 @@ exports.editItem = async (req, res) => {
         const item = await Inventory.findById(id)      
         if (item) {
             await item.updateOne({ ...req.body })
-            if (item.quantity < 2) sendInventoryMessage('We need to order more ', item)
+            if (item.quantity <= 3) sendInventoryMessage('We need to order more ', item)
         }
 
         res.status(200).json("Item Updated Successfully")
