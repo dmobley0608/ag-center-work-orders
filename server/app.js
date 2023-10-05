@@ -51,6 +51,7 @@ app.use(passport.authenticate('session'))
 
 app.use('/api/work-orders', workOrderRouter)
 app.use('/api/user', userRouter)
+app.use('/api/inventory')
 
 //Redirect to Frontend
 app.use('/*', (req, res)=>{

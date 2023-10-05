@@ -37,3 +37,28 @@ exports.sendMessage=(subject, order)=>{
         }
     })
 }
+
+exports.sendInventoryMessage=(subject, item)=>{
+    let emailTo = ["kmiller@hallcounty.org","tmobley@hallcounty.org"]  
+    
+    
+    const mailData = {
+        from:'info@chicoppework.com',
+        to:emailTo,
+        subject:subject,       
+        html:`<h1>Inventory: ${item.title}</h1>
+        <h4>Only ${item.quantity} left in stock. Please order more </h4>       
+        Thanks,
+        Chicopee Inventory       
+        `
+    }
+
+    transporter.sendMail(mailData,(err, info)=>{
+        if(err){
+            console.log(err)
+        }else{
+            console.log("Message Sent Successfully")
+        }
+    })
+}
+
