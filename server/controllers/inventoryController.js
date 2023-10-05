@@ -21,10 +21,10 @@ exports.getItemById = async (req, res) => {
 }
 //Add Item
 exports.addItem = async (req, res) => {
-    
-    try {    
-        const item = await WorkOrder.create({...req.body})       
-        res.status(200).json({message:"Item Added Successfully", item})
+
+    try {
+        const item = await Inventory.create({ ...req.body })
+        res.status(200).json({ message: "Item Added Successfully", item })
 
     } catch (err) {
         console.log(err)
@@ -33,13 +33,16 @@ exports.addItem = async (req, res) => {
 }
 
 //Edit Item
-exports.editItem = async(req,res)=>{
-   
+exports.editItem = async (req, res) => {
     try {
-        const {id} = req.params                
-        const item = await WorkOrder.findById(id)
-        await item.updateOne({...req.body})       
-        if(item.quantity < 2) sendInventoryMessage('We need to order more ', item)
+
+        const { id } = req.params        
+        const item = await Inventory.findById(id)      
+        if (item) {
+            await item.updateOne({ ...req.body })
+            if (item.quantity < 2) sendInventoryMessage('We need to order more ', item)
+        }
+
         res.status(200).json("Item Updated Successfully")
 
     } catch (err) {
