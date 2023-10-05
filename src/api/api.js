@@ -16,7 +16,7 @@ export const addCommentToWorkOrder = (id, comment)=>client.put(`/work-orders/add
 
 //Inventory
 export const getInventoryItems = ()=>client.get('inventory/')
-export const editInventoryItem = (id)=>client.put(`inventory/${id}`)
+export const editInventoryItem = (id, item)=>client.put(`inventory/${id}`, item)
 
 //User
 export const login = (user) =>client.post('/user/login', user)
