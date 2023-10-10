@@ -38,7 +38,7 @@ export default function Inventory() {
                         <div key={item._id} className='row border border-1 py-2'>
                             <div className="d-sm-none d-md-block text-start col-4">{item.barcode}</div>
                             <div className="col-4 text-start">{item.title}</div>
-                            <div className="col-2 d-flex justify-content-between">
+                            <div className="col-2 d-flex justify-content-between align-content-center">
                                 <button className='btn btn-secondary' onClick={() => { adjustInventoryQuantity(item, -1) }}>-</button>
                                 <h5>{item.quantity}</h5>
                                 <button className='btn btn-secondary' onClick={() => { adjustInventoryQuantity(item, 1) }}>+</button>
