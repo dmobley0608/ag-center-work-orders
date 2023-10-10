@@ -36,8 +36,8 @@ export default function Inventory() {
                     </div>
                     {items && items.map(item => (
                         <div key={item._id} className='row border border-1 py-2'>
-                            <div className="d-sm-none d-md-block col-4">{item.barcode}</div>
-                            <div className="col-4">{item.title}</div>
+                            <div className="d-sm-none d-md-block text-start col-4">{item.barcode}</div>
+                            <div className="col-4 text-start">{item.title}</div>
                             <div className="col-2 d-flex justify-content-between">
                                 <button className='btn btn-secondary' onClick={() => { adjustInventoryQuantity(item, -1) }}>-</button>
                                 <h5>{item.quantity}</h5>
