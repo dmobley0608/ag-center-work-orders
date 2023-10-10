@@ -26,7 +26,7 @@ export default function Inventory() {
         console.log(items)
     }, [])
     return (
-        <div className='d-flex flex-column justify-content-between' style={{maxWidth:'800px'}}>
+        <div className='d-flex flex-column justify-content-between mx-auto' style={{maxWidth:'800px'}}>
             {!isLoading ?
                 <>
                     <div className='row border border-1'>
