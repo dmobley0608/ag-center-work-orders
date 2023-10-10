@@ -5,7 +5,7 @@ const { sendMessage, sendInventoryMessage } = require('../utils/emailService/ema
 
 //Get All Inventory Items
 exports.getInventoryItems = async (req, res) => {
-    const items = await Inventory.find()
+    const items = await Inventory.find().sort("-title")
     res.status(200).json(items)
 }
 //Get Item By id
