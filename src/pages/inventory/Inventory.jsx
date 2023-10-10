@@ -30,13 +30,13 @@ export default function Inventory() {
             {!isLoading ?
                 <>
                     <div className='row border border-1'>
-                        <div className="col-4">Barcode</div>
+                        <div className="d-sm-none d-md-block col-4">Barcode</div>
                         <div className="col-4">Title</div>
                         <div className="col-2">Quantity</div>
                     </div>
                     {items && items.map(item => (
                         <div key={item._id} className='row border border-1 py-2'>
-                            <div className="col-4">{item.barcode}</div>
+                            <div className="d-sm-none d-md-block col-4">{item.barcode}</div>
                             <div className="col-4">{item.title}</div>
                             <div className="col-2 d-flex justify-content-between">
                                 <button className='btn btn-secondary' onClick={() => { adjustInventoryQuantity(item, -1) }}>-</button>
