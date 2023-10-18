@@ -47,7 +47,7 @@ exports.sendInventoryMessage=(subject, item)=>{
         to:emailTo,
         subject:subject,       
         html:`<h1>Inventory: ${item.title}</h1>
-        <h4>Only ${item.quantity} left in stock. Please order more </h4>       
+        <h4>Only ${item.quantity} left in stock. Please order more {item.name}:Barcode:{item.barcode} </h4>       
         Thanks,
         Chicopee Inventory       
         `
