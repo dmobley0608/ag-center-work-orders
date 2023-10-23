@@ -6,8 +6,8 @@ const { sendMessage } = require('../utils/emailService/email');
 exports.getOrderByStatus = async (req, res) => {
     const { status } = req.params
     const workOrders = status === "pending" ?
-        await WorkOrder.find({ completed: false, finalized: false }).sort("-priority")
-        : await WorkOrder.find({ completed: true, finalized: false }).sort("-priority")
+        await WorkOrder.find({ completed: false, finalized: false }).sort({priority:-1, createdAt: -1})
+        : await WorkOrder.find({ completed: true, finalized: false }).sort({priority:-1, createdAt: -1})
     res.status(200).json(workOrders)
 }
 //Get Order By id
