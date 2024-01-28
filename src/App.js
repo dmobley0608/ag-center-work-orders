@@ -7,6 +7,8 @@ import Login from './pages/user/Login';
 import { useAuth } from './api/AuthContext';
 import { useEffect } from 'react';
 import Inventory from './pages/inventory/Inventory';
+import Quote from './components/quote/quote';
+import QuoteDocument from './components/quote/quoteDocument';
 
 
 
@@ -18,6 +20,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path='/:status' element={<WorkOrders />} />     
       <Route path="/order/:id" element={<WorkOrder />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/quote" element={<Quote />} />   
     </Route>
 
 

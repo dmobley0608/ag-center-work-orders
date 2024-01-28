@@ -1,0 +1,94 @@
+@page{
+    size: "letter";
+}
+.print{
+    display:none !important;  
+}
+.left-margin{
+    height: 100vh;
+    border-right: 2px solid rgba(126, 124, 124, 0.507);
+    width: 2.25in;   
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-align: left;
+    padding-top: 2in;
+    padding-left: .15in;
+    padding-right: .15in;
+    
+}
+
+.left-margin .blank{
+    background-color: white;
+    height: 1.75in;
+    width: 2.25in;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid black;
+    
+}
+img{
+    width:90px;
+    margin-bottom: 1.75in; 
+    margin-top: .25in; 
+    
+    position: absolute;
+    top: 0;
+    left: .05in;
+    width: 2in;
+}
+
+.left-margin p{
+    margin: 0;
+    padding: 0;
+    
+}
+
+.doc-body{    
+    width: 6in;
+    height: 100vh;    
+}
+
+.header{
+   
+    height: 1in;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.header h1, p{
+    margin:0;
+    font-weight: bold;
+
+}
+.header h1{
+    font-size: 30px;
+}
+
+@media print{
+    .form{
+        display: none !important;
+    }
+    .print{
+        display:flex !important;
+    }
+    body {
+        font-family: 'Times New Roman', Times, serif;
+        margin:0;
+        padding: 0;
+    }
+    .navbar{
+        display: none;
+    }
+    hr {
+        display: block;
+        height: 1px;
+        background: transparent;
+        width: 100%;
+        border: none;
+        border-top: solid 1px #aaa;
+    }
+   
+}

@@ -14,7 +14,7 @@ const userRouter = require('./routes/userRoutes');
 //Database
 const mongoose = require('mongoose');
 
-mongoose.connect(`${process.env.DATABASE_CONNECTION_STRING}`)   
+mongoose.connect(`${process.env.DATABASE_CONNECTION_STRING}`)    
 
 //App Config
 const app = express();
@@ -34,7 +34,7 @@ app.use(session({
         ttl:86400000,
         autoRemove:'native'    
     }),   
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET, 
     resave: false, 
     saveUninitialized: false,    
     sameSite:"none",

@@ -13,6 +13,11 @@ export default function Navbar() {
                 </button>
                 <div className="collapse navbar-collapse  " id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto  ">
+                    <li className="nav-item">
+                            <NavLink className="nav-link " aria-current="page" to="/quote" >
+                                <p data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">Pending</p>
+                            </NavLink>
+                        </li>
                         <li className="nav-item">
                             <NavLink className="nav-link " aria-current="page" to="/pending" >
                                 <p data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">Pending</p>
