@@ -15,7 +15,7 @@ export default function Navbar() {
                     <ul className="navbar-nav ms-auto  ">
                     <li className="nav-item">
                             <NavLink className="nav-link " aria-current="page" to="/quote" >
-                                <p data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">Pending</p>
+                                <p data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">Quote</p>
                             </NavLink>
                         </li>
                         <li className="nav-item">

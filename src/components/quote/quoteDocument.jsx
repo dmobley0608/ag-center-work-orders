@@ -37,34 +37,37 @@ export default function QuoteDocument() {
                             <h1>Chicopee Woods Agricultural Center</h1>
                             <p>Rental Quote</p>
                         </div>
-                        <div className='w-100 px-5 mt-3'>
+
+                        <div className='w-100 ps-5 mt-3'>
                             <div className='d-flex text-left w-100'>
-                                <p>Date: {new Date(quote.quoteDate).toUTCString().substring(0,16)}</p>
+                                <p>Date: {new Date(quote.quoteDate).toUTCString().substring(0, 16)}</p>
                             </div>
-                            <div className='d-flex justify-content-between align-items-start text-left w-100 mt-3'>
-                                <div className='text-start'>
-                                    <p>Facility Requested: {quote.facility}</p>
-                                    <p>Usage: {quote.rateType}</p>
-                                    <p>State Dates: {new Date(quote.startDate).toUTCString().substring(0,16)}</p>
-                                    <p>Start Time: {quote.startTime}</p>
-                                    <p>Total Days: {(new Date(quote.endDate).getDate() - new Date(quote.startDate).getDate()) || 1}</p>
+
+                            <div className='d-flex flex-column justify-content-between align-items-start text-left w-100 mt-3'>
+                                <div className='text-start w-100'>
+                                    <div className='row'>
+                                        <p className='col-6'>Facility Requested: {quote.facility}</p>
+                                        <p className='col-6'>Usage: {quote.rateType}</p>
+                                        <p className='col-6'>Guest: {quote.numGuests}</p>
+                                        <p className='col-6 '>Rate: ${quote.rate.toFixed(2)}</p>
+                                    </div>
+                                    <div className='row mt-2 '>
+                                        <p className='col-5'>State Dates: {new Date(quote.startDate).toLocaleDateString()}</p>
+                                        <p className='col-5'>End Date:   {new Date(quote.endDate).toLocaleDateString()}</p>
+                                        <p className='col-2'>Days: {(new Date(quote.endDate).getDate() - new Date(quote.startDate).getDate()) || 1}</p>
+                                    </div>
+                                    <div className='row '>
+                                        <p className='col-5'>Start Time: {quote.startTime}</p>
+                                        <p className='col-5'>End Time: {quote.endTime}</p>
+                                        <p className='col-2'>Hours:{(parseInt(quote.endTime.substring(0, 2)) - parseInt(quote.startTime.substring(0, 2)))}</p>
+                                    </div>                                   
                                 </div>
-
-                                <div className='d-flex flex-column align-items-end'>
-                                    <p>Number of Guest: {quote.numGuests}</p>
-                                    <br />
-                                    <p>End Date:   {new Date(quote.endDate).toUTCString().substring(0,16)}</p>
-                                    <p>End Time: {quote.endTime}</p>
-                                    <p>Total Hours:{(parseInt(quote.endTime.substring(0, 2)) - parseInt(quote.startTime.substring(0, 2)))}</p>
-
-                                    <p className='mt-3'>Rate: ${quote.rate.toFixed(2)}</p>
-                                </div>
-
                             </div>
-                            <div className='w-100 text-end'>
-                                <p>Facility Cost: ${quote.facilityRentalCost.toFixed(2)}</p>
+                            <div className='row w-100 text-end'>
+                                <p className=''>Facility Cost: ${quote.facilityRentalCost.toFixed(2)}</p>
                             </div>
-                            <hr/>
+                            <hr />
+
                             <div className='mt-1 me-1'>
                                 <p className='text-start'>Additonal Services <span className='text-danger'>***CASH PAYMENT ONLY***</span></p>
                                 <div className='text-start mt-1'>
@@ -120,10 +123,7 @@ export default function QuoteDocument() {
 
                             </div>
                         </div>
-
                     </div>
-
-
                 </div>
             }
         </>

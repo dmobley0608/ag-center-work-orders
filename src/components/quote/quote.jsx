@@ -45,7 +45,7 @@ export default function Quote() {
             <div className='form d-flex flex-column justify-content-center align-items-center border mx-auto mt-5 rounded p-5' style={{ maxWidth: '800px' }}>
 
                 <form className='w-100 mx-auto d-flex flex-column align-items-start justify-content-start' >
-                    <div className='d-flex flex-row justify-content-between w-100'>
+                    <div className='d-flex flex-row flex-wrap justify-content-between w-100'>
                         <div className='flex mb-3'>
                             <label className='form-label'>Start Date:</label>
                             <input className='form-control' type="date" onChange={(e) => dispatch(setStartDate(e.target.value))} />
@@ -56,7 +56,7 @@ export default function Quote() {
                         </div>
                     </div>
 
-                    <div className='d-flex flex-row justify-content-between w-100'>
+                    <div className='d-flex flex-row flex-wrap justify-content-between w-100'>
                         <div className='flex mb-3'>
                             <label className='form-label'>Start Time:</label>
                             <input className='form-control' type="time" onChange={(e) => dispatch(setStartTime(e.target.value))} />
@@ -66,7 +66,7 @@ export default function Quote() {
                             <input className='form-control' type="time" onChange={(e) => dispatch(setEndTime(e.target.value))} />
                         </div>
                     </div>
-                    <div className='d-flex flex-row align-items-center  w-100'>
+                    <div className='d-flex flex-row align-items-center  w-100 flex-wrap'>
                         <div className='flex mb-3 me-3'>
                             <label className='form-label'>Expected Guest</label>
                             <input className='form-control' type="number" onChange={(e) => dispatch(setNumGuests(e.target.value))} />
@@ -173,9 +173,9 @@ export default function Quote() {
 
 
                             </select>
-                            <div className='d-flex justify-content-between'>
+                            <div className='d-flex flex-wrap justify-content-between'>
                                 {facility === 'Activity Hall' &&
-                                    <div className='text-start w-25'>
+                                    <div className='text-start'>
                                         <label className='form-label'>Event Worker Fee</label>:
                                         <input className='form-control' value={parseInt(eventWorkerFee)} onChange={(e) => dispatch(setEventWorkerFee(parseInt(e.target.value || 0)))} />
                                     </div>
