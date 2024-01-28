@@ -9,13 +9,13 @@ export default function QuoteDocument() {
             {quote.startDate && quote.startTime && quote.endTime &&
                 <div className='print d-flex'>
 
-                    <div className='left-margin px-1'>
+                    <div className='left-margin px-1 text-muted'>
                         {/* <div className='blank'></div> */}
                         <div className='img'>
                             <img src='https://www.hallcounty.org/ImageRepository/Document?documentID=6294' alt='hallcounty' />
                         </div>
 
-                        <div className='mb-5'>
+                        <div className='mb-5 text-muted'>
                             <p>Chicopee Woods <br />Agricultural Center</p>
                             <p>1855 Calvary Church Road</p>
                             <p>Gainesville, Ga. 30507</p>
@@ -54,7 +54,7 @@ export default function QuoteDocument() {
                                     <div className='row mt-2 '>
                                         <p className='col-5'>State Dates: {new Date(quote.startDate).toLocaleDateString()}</p>
                                         <p className='col-5'>End Date:   {new Date(quote.endDate).toLocaleDateString()}</p>
-                                        <p className='col-2'>Days: {(new Date(quote.endDate).getDate() - new Date(quote.startDate).getDate()) || 1}</p>
+                                        <p className='col-2'>Days: {(new Date(quote.endDate).getDate() - new Date(quote.startDate).getDate()) + 1 || 1}</p>
                                     </div>
                                     <div className='row '>
                                         <p className='col-5'>Start Time: {quote.startTime}</p>

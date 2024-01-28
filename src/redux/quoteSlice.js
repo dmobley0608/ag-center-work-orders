@@ -2,10 +2,10 @@ import { createSlice, current } from '@reduxjs/toolkit'
 
 const initialState = {
     quoteDate: new Date().toLocaleDateString(),
-    startDate: '',
+    startDate:'',
     endDate: '',
-    startTime: null,
-    endTime: null,
+    startTime: '16:00:00',
+    endTime: '21:00:00',
     addOns: [],
     addOnFees: 0,
     securityFee: 0,
@@ -19,6 +19,8 @@ const initialState = {
     totalCost: 0,
     numGuests: 0,
     numOfficers: 0,
+    totalDays: 1,
+    totalHours: 1
 }
 
 
@@ -33,7 +35,7 @@ export const quoteSlice = createSlice({
         setSecurityFee: (state, { payload }) => { state.securityFee = payload; },
         setEventWorkerFee: (state, { payload }) => { state.eventWorkerFee = payload; },
         addAddOn: (state, { payload }) => { state.addOns = [...state.addOns, payload]; },
-        removeAddOn:(state, {payload})=>{state.addOns = state.addOns.filter(addOn=> addOn.name !== payload.name) || []},
+        removeAddOn: (state, { payload }) => { state.addOns = state.addOns.filter(addOn => addOn.name !== payload.name) || [] },
         setDeposit: (state, { payload }) => { state.deposit = payload; state.totalCost += payload },
         toggleAlcohol: (state, { payload }) => { state.alcohol = !state.alcohol },
         setFacility: (state, { payload }) => {
@@ -51,34 +53,33 @@ export const quoteSlice = createSlice({
         calculateTotalCost: (state, { payload }) => {
             state.totalCost = (state.deposit || 0) + state.facilityRentalCost + state.eventWorkerFee + state.securityFee + state.addOnFees
         },
-        calculateFacilityCost: (state) => {
-            const endDate =new Date(state.endDate).getDate() 
-            const startDate =  new Date(state.startDate).getDate()
-           const totalDays = endDate - startDate
-            state.facilityRentalCost = (state.rate * (totalDays || 1))
+        calculateFacilityCost: (state) => {           
+            state.facilityRentalCost = (state.rate * (state.totalDays || 1))
         },
         calculateWorkerFee: (state) => {
             if (state.endTime && state.startTime) {
-                state.securityFee = ((parseInt(state.endTime.substring(0, 2)) - parseInt(state.startTime.substring(0, 2))) * 40) * state.numOfficers
-                if (state.facility === "Activity Hall") {                  
-                    state.eventWorkerFee = state.eventWorkerFee = (parseInt(state.endTime.substring(0, 2)) - parseInt(state.startTime.substring(0, 2))) * 20
-                } 
+                state.securityFee = (state.totalHours * 40) * state.totalDays * state.numOfficers
+                if (state.facility === "Activity Hall") {
+                    state.eventWorkerFee = state.eventWorkerFee = (state.totalHours * 20) * state.totalDays
+                }
             } else {
                 state.eventWorkerFee = 0
             }
 
         },
-        calculateAddOnFees: (state, { payload }) => { 
-           
-            if(state.addOns.length > 1){
-               state.addOnFees = state.addOns.reduce((a,b)=> (a.fee + b.fee))
-            }else if(state.addOns.length === 1){
-                    state.addOnFees = state.addOns[0].fee
-            }else{
+        calculateAddOnFees: (state, { payload }) => {
+            if (state.addOns.length > 1) {
+                state.addOnFees = state.addOns.reduce((a, b) => (a.fee + b.fee))
+            } else if (state.addOns.length === 1) {
+                state.addOnFees = state.addOns[0].fee
+            } else {
                 state.addOnFees = 0
             }
-            
         },
+        calculateTotalDaysAndTime: (state) => {            
+                state.totalDays = ((new Date(state.endDate).getDate() - new Date(state.startDate).getDate())) + 1 || 1
+                state.totalHours = (parseInt(state.endTime.substring(0, 2)) - parseInt(state.startTime.substring(0, 2))) || 1           
+        }
 
     },
 
@@ -104,5 +105,6 @@ export const {
     setNumOfficers,
     setFacilityRentalRate,
     calculateFacilityCost,
-    calculateWorkerFee
+    calculateWorkerFee,
+    calculateTotalDaysAndTime
 } = quoteSlice.actions

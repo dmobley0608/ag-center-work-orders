@@ -7,14 +7,15 @@
 .left-margin{
     height: 100vh;
     border-right: 2px solid rgba(126, 124, 124, 0.507);
-    width: 2.25in;   
+    width: 2.5in;   
     display: flex;
     flex-direction: column;
     justify-content: start;
     text-align: left;
     padding-top: 2in;
     padding-left: .15in;
-    padding-right: .15in;
+    padding-right: .25in;
+    color: rgb(77, 76, 76);
     
 }
 
@@ -29,14 +30,13 @@
     
 }
 img{
-    width:90px;
+    width:1.75in;
     margin-bottom: 1.75in; 
-    margin-top: .25in; 
-    
+    margin-top: .25in;     
     position: absolute;
     top: 0;
     left: .05in;
-    width: 2in;
+   
 }
 
 .left-margin p{
@@ -46,7 +46,7 @@ img{
 }
 
 .doc-body{    
-    width: 7in;
+    width: 6.5in;
     height: 100vh;    
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { calculateWorkerFee, calculateFacilityCost, calculateTotalCost, setDeposit, setEndDate, setEndTime, setEventWorkerFee, setFacility, setFacilityRentalRate, setNumGuests, setNumOfficers, setRate, setSecurityFee, setStartDate, setStartTime, toggleAlcohol, addAddOn, removeAddOn, calculateAddOnFees } from '../../redux/quoteSlice'
+import { calculateWorkerFee, calculateFacilityCost, calculateTotalCost, setDeposit, setEndDate, setEndTime, setEventWorkerFee, setFacility, setFacilityRentalRate, setNumGuests, setNumOfficers, setRate, setSecurityFee, setStartDate, setStartTime, toggleAlcohol, addAddOn, removeAddOn, calculateAddOnFees, calculateTotalDaysAndTime } from '../../redux/quoteSlice'
 import './quote.css'
 import { NavLink } from 'react-router-dom'
 import QuoteDocument from './quoteDocument'
@@ -34,6 +34,7 @@ export default function Quote() {
     }
 
     useEffect(() => {
+        dispatch(calculateTotalDaysAndTime())
         dispatch(calculateAddOnFees())
         dispatch(calculateWorkerFee())
         dispatch(calculateFacilityCost())
