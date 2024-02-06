@@ -10,7 +10,7 @@
     width: 2.5in;   
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     text-align: left;
     padding-top: 2in;
     padding-left: .15in;
@@ -55,7 +55,7 @@ img{
     height: 1in;
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .header h1, p{

@@ -60,5 +60,5 @@ app.use('/*', (req, res)=>{
     res.sendFile("index.html", {root: path.join(__dirname,"../build")})
 })
 app.listen(process.env.PORT || 9000, ()=>{ 
-    console.log(`Running on Port: ${process.env.PORT || 9000}`)  
+    console.log(`Running on Port: ${process.env.PORT || 3000}`)  
 }) 

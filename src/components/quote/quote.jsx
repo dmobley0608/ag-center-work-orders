@@ -1,30 +1,29 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { calculateWorkerFee, calculateFacilityCost, calculateTotalCost, setDeposit, setEndDate, setEndTime, setEventWorkerFee, setFacility, setFacilityRentalRate, setNumGuests, setNumOfficers, setRate, setSecurityFee, setStartDate, setStartTime, toggleAlcohol, addAddOn, removeAddOn, calculateAddOnFees, calculateTotalDaysAndTime } from '../../redux/quoteSlice'
+import { calculateWorkerFee, calculateTotalCost, setDeposit, setTotalHours, setEventWorkerFee, setFacility, setNumGuests, setNumOfficers, setRate, setSecurityFee, setTotalDays,  toggleAlcohol, addAddOn, removeAddOn, calculateAddOnFees, calculateFacilityCost, updateAddon } from '../../redux/quoteSlice'
 import './quote.css'
-import { NavLink } from 'react-router-dom'
+
 import QuoteDocument from './quoteDocument'
 export default function Quote() {
     const dispatch = useDispatch()
-    const alcoholServed = useSelector(state => state.quote.alcohol)
-    const showHours = useSelector(state => (state.quote.endTime - state.quote.startTime))
+    const alcoholServed = useSelector(state => state.quote.alcohol)  
     const facility = useSelector(state => state.quote.facility)
     const securityFee = useSelector(state => state.quote.securityFee)
     const eventWorkerFee = useSelector(state => state.quote.eventWorkerFee)
-    const totalCost = useSelector(state => state.quote.totalCost)
-    const facilityRentalCost = useSelector(state => state.quote.facilityRentalCost)
     const quote = useSelector(state => state.quote)
 
     const handleRateSelect = (e) => {
+        let totalCost = parseInt(e.target.value) < 500 ? parseInt(e.target.value) * quote.totalHours : parseInt(e.target.value)
         const data = {
             name: e.target.options[e.target.selectedIndex].text,
-            value: parseInt(e.target.value)
+            value: parseInt(e.target.value),
+            totalCost:totalCost || parseInt(e.target.value)
         }
         dispatch(setRate(data))
     }
 
-    const handleAddOnCheckBox = (e) => {
-        const addOn = { name: e.name, fee: parseInt(e.value) }
+    const handleAddOnCheckBox = (e, totalCost) => {
+        const addOn = { name: e.name, fee: parseInt(e.value), quantity:1, totalCost:parseInt(totalCost) || parseInt(e.value) }
         if (e.checked) {
             dispatch(addAddOn(addOn))
         } else {
@@ -32,15 +31,21 @@ export default function Quote() {
         }
 
     }
-
-    useEffect(() => {
-        dispatch(calculateTotalDaysAndTime())
-        dispatch(calculateAddOnFees())
+    const handleAddonInput = (e, price, totalCost)=>{
+        const fee = {name:e.target.name, fee:price, quantity:e.target.value, totalCost:parseInt(totalCost) || parseInt(e.target.value) * price }
+        dispatch(updateAddon(fee))    
+    }
+    const calculateFees = useCallback(() => {
+        dispatch(calculateAddOnFees())      
         dispatch(calculateWorkerFee())
         dispatch(calculateFacilityCost())
         dispatch(calculateTotalCost())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
-    }, [quote])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => { calculateFees() }, [quote])
+
     return (
         <>
             <div className='form d-flex flex-column justify-content-center align-items-center border mx-auto mt-5 rounded p-5' style={{ maxWidth: '800px' }}>
@@ -48,23 +53,15 @@ export default function Quote() {
                 <form className='w-100 mx-auto d-flex flex-column align-items-start justify-content-start' >
                     <div className='d-flex flex-row flex-wrap justify-content-between w-100'>
                         <div className='flex mb-3'>
-                            <label className='form-label'>Start Date:</label>
-                            <input className='form-control' type="date" onChange={(e) => dispatch(setStartDate(e.target.value))} />
-                        </div>
-                        <div className='flex mb-3'>
-                            <label className='form-label'>End Date:</label>
-                            <input className='form-control' type="date" onChange={(e) => dispatch(setEndDate(e.target.value))} />
+                            <label className='form-label'>Number of Days:</label>
+                            <input className='form-control' type="number" onChange={(e) => dispatch(setTotalDays(e.target.value))} />
                         </div>
                     </div>
 
                     <div className='d-flex flex-row flex-wrap justify-content-between w-100'>
                         <div className='flex mb-3'>
-                            <label className='form-label'>Start Time:</label>
-                            <input className='form-control' type="time" onChange={(e) => dispatch(setStartTime(e.target.value))} />
-                        </div>
-                        <div className='flex mb-3'>
-                            <label className='form-label'>End Time:</label>
-                            <input className='form-control' type="time" onChange={(e) => dispatch(setEndTime(e.target.value))} />
+                            <label className='form-label'>Total Hours:</label>
+                            <input className='form-control' type="number" onChange={(e) => dispatch(setTotalHours(e.target.value))} />
                         </div>
                     </div>
                     <div className='d-flex flex-row align-items-center  w-100 flex-wrap'>
@@ -163,9 +160,9 @@ export default function Quote() {
                                     <option value={500}>Daily County Resident</option>
                                     <option value={600}>Daily Family Groups/Non-County Resident/Church/Non-Profit</option>
                                     <option value={650}>Daily Business</option>
-                                    <option value={60 * showHours}>Hourly County Resident</option>
-                                    <option value={70 * showHours}>Hourly Family Groups/Non-County Resident/Church/Non-Profit</option>
-                                    <option value={80 * showHours}>Hourly Business</option>
+                                    <option value={60}>Hourly County Resident</option>
+                                    <option value={70 }>Hourly Family Groups/Non-County Resident/Church/Non-Profit</option>
+                                    <option value={80 }>Hourly Business</option>
 
 
 
@@ -197,25 +194,60 @@ export default function Quote() {
                             <h5 className='mt-3'>Optional Add Ons</h5>
 
                             <div className="w-100 d-flex justify-content-between" role="group" aria-label="Basic checkbox toggle button group">
-                                <input type="checkbox" name="P/A System" value={100} className="btn-check" id="btncheck1" onClick={(e) => handleAddOnCheckBox(e.target)} />
-                                <label className="btn btn-outline-primary" htmlFor="btncheck1">PA System</label>
+                                <div>
+                                    <input type="checkbox" name="P/A System" value={100} className="btn-check" id="btncheck1" onClick={(e) => handleAddOnCheckBox(e.target)} />
+                                    <label className="btn btn-outline-primary" htmlFor="btncheck1">PA System</label>
+                                </div>
+
                                 {facility !== "Activity Hall" &&
                                     <>
-                                        <input type="checkbox" name='Arena Packed' value={500} className="btn-check" id="btncheck2" onClick={(e) => handleAddOnCheckBox(e.target)} />
-                                        <label className="btn btn-outline-primary" htmlFor="btncheck2">Arena Packed</label>
+                                        <div>
+                                            <input type="checkbox" name='Electricity/per day' value={35} className="btn-check" id="btncheck2" onClick={(e) => handleAddOnCheckBox(e.target, (35 * quote.totalDays))} />
+                                            <label className="btn btn-outline-primary" htmlFor="btncheck2">Electricity</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name='Maintenance/ per day' value={25} className="btn-check" id="btncheck3" onClick={(e) => handleAddOnCheckBox(e.target,(25* quote.totalDays))} />
+                                            <label className="btn btn-outline-primary" htmlFor="btncheck3">Maintenance</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name='Props & Jumps/per day' value={162 } className="btn-check" id="btncheck5" onClick={(e) => handleAddOnCheckBox(e.target, (162 * quote.totalDays))} />
+                                            <label className="btn btn-outline-primary" htmlFor="btncheck5">Props & Jumps</label>
+                                        </div>
+
+                                        <div>
+                                            <input type="checkbox" name='Arena Packed' value={500} className="btn-check" id="btncheck4" onClick={(e) => handleAddOnCheckBox(e.target)} />
+                                            <label className="btn btn-outline-primary" htmlFor="btncheck4">Arena Packed</label>
+                                        </div>
+
                                     </>
                                 }
                             </div>
                             {facility !== "Activity Hall" &&
                                 <>
-                                    <div className='d-flex  mt-2'>
-                                        <div className='w-25 me-2'>
+                                    <div className='d-flex flex-wrap mt-4 justify-content-between align-items-end'>
+                                        <div className='mb-3'>
                                             <label className="form-label" htmlFor="btncheck3">Chairs</label>
-                                            <input className='form-control' placeholder='Quantity' />
+                                            <input className='form-control' placeholder='Quantity' name="Chairs" onChange={(e)=> handleAddonInput(e, 1)} />
                                         </div>
-                                        <div className='w-25'>
+                                        <div className='mb-3'>
                                             <label className="form-label" htmlFor="btncheck3">Tables</label>
-                                            <input className='form-control' placeholder='Quantity' />
+                                            <input className='form-control' placeholder='Quantity' name="Tables" onChange={(e)=> handleAddonInput(e, 6 )}/>
+                                        </div>
+                                        <div className='mb-3'>
+                                            <label className="form-label" htmlFor="btncheck3">Corral Panels(renter set up)</label>
+                                            <input className='form-control' placeholder='Quantity' name="Corral Panels(renter setup)" onChange={(e)=> handleAddonInput(e, 6)}/>
+                                        </div>
+                                        <div className='mb-3'>
+                                            <label className="form-label" htmlFor="btncheck3">Corral Panels(Ag Employee set up)</label>
+                                            <input className='form-control' placeholder='Quantity' name="Corral Panels(Ag Employee set up)" onChange={(e)=> handleAddonInput(e, 9)}/>
+                                        </div>
+                                        <div className='mb-3'>
+                                            <label className="form-label" htmlFor="btncheck3">Vendors</label>
+                                            <input className='form-control' placeholder='Quantity' name="Vendors/per day" onChange={(e)=> handleAddonInput(e, 33,(33 * quote.totalDays*e.target.value))}/>
+                                        </div>
+                                        <div className='mb-3'>
+                                            <label className="form-label" htmlFor="btncheck3">Camper Hookups</label>
+                                            <input className='form-control' placeholder='Quantity' name="Camper-Hookups/per day" onChange={(e)=> handleAddonInput(e,25, (25 * quote.totalDays * e.target.value))}/>
                                         </div>
                                     </div>
                                 </>
@@ -223,22 +255,14 @@ export default function Quote() {
 
                         </div>
                     }
-                    <div className='w-100 d-flex flex-row justify-content-between align-items-center mt-5'>
-                        <div>
-                            <h4>Total Rental Charge: ${facilityRentalCost.toFixed(2)}</h4>
-                        </div>
-                    </div>
 
 
-                    <div className='d-flex justify-content-start text-start w-100  mt-5'>
-                        <h2 className='w-50'>Total Due:${totalCost.toFixed(2)}</h2>
-                    </div>
 
                 </form >
-                <button className="btn btn-primary w-25" onClick={() => { window.print() }}>Print Quote</button>
+                <button className="btn btn-primary w-25 mt-5" onClick={() => { window.print() }}>Print Quote</button>
 
             </div >
-            <QuoteDocument/>
+            <QuoteDocument />
         </>
     )
 }

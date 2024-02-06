@@ -1,11 +1,7 @@
-import { createSlice, current } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     quoteDate: new Date().toLocaleDateString(),
-    startDate:'',
-    endDate: '',
-    startTime: '16:00:00',
-    endTime: '21:00:00',
     addOns: [],
     addOnFees: 0,
     securityFee: 0,
@@ -28,10 +24,8 @@ export const quoteSlice = createSlice({
     name: 'quote',
     initialState: initialState,
     reducers: {
-        setStartDate: (state, { payload }) => { state.startDate = payload },
-        setEndDate: (state, { payload }) => { state.endDate = payload },
-        setStartTime: (state, { payload }) => { state.startTime = payload },
-        setEndTime: (state, { payload }) => { state.endTime = payload },
+        setTotalDays: (state, { payload }) => { state.totalDays = parseInt(payload) },
+        setTotalHours: (state, { payload }) => { state.totalHours = parseInt(payload) },
         setSecurityFee: (state, { payload }) => { state.securityFee = payload; },
         setEventWorkerFee: (state, { payload }) => { state.eventWorkerFee = payload; },
         addAddOn: (state, { payload }) => { state.addOns = [...state.addOns, payload]; },
@@ -46,40 +40,37 @@ export const quoteSlice = createSlice({
         setRate: (state, { payload }) => {
             state.rate = payload.value
             state.rateType = payload.name
-            state.facilityRentalCost += state.rate;
+            state.facilityRentalCost = payload.totalCost;
         },
         setNumGuests: (state, { payload }) => { state.numGuests = payload },
         setNumOfficers: (state, { payload }) => { state.numOfficers = payload; },
         calculateTotalCost: (state, { payload }) => {
             state.totalCost = (state.deposit || 0) + state.facilityRentalCost + state.eventWorkerFee + state.securityFee + state.addOnFees
         },
-        calculateFacilityCost: (state) => {           
-            state.facilityRentalCost = (state.rate * (state.totalDays || 1))
+        calculateFacilityCost: (state) => {
+            if(state.rate >= 500){
+                state.facilityRentalCost = (state.rate * (state.totalDays || 1))
+            }
+            
         },
         calculateWorkerFee: (state) => {
-            if (state.endTime && state.startTime) {
-                state.securityFee = (state.totalHours * 40) * state.totalDays * state.numOfficers
-                if (state.facility === "Activity Hall") {
-                    state.eventWorkerFee = state.eventWorkerFee = (state.totalHours * 20) * state.totalDays
-                }
-            } else {
-                state.eventWorkerFee = 0
+            state.securityFee = (state.totalHours * 40) * state.totalDays * state.numOfficers
+            if (state.facility === "Activity Hall") {
+                state.eventWorkerFee = (state.totalHours * 20) * state.totalDays
             }
 
         },
         calculateAddOnFees: (state, { payload }) => {
-            if (state.addOns.length > 1) {
-                state.addOnFees = state.addOns.reduce((a, b) => (a.fee + b.fee))
-            } else if (state.addOns.length === 1) {
-                state.addOnFees = state.addOns[0].fee
-            } else {
-                state.addOnFees = 0
-            }
+            state.addOnFees = state.addOns.map(addOn => addOn.totalCost).reduce((a, b) => a + b, 0)
         },
-        calculateTotalDaysAndTime: (state) => {            
-                state.totalDays = ((new Date(state.endDate).getDate() - new Date(state.startDate).getDate())) + 1 || 1
-                state.totalHours = (parseInt(state.endTime.substring(0, 2)) - parseInt(state.startTime.substring(0, 2))) || 1           
+        updateAddon: (state, { payload }) => {
+
+            state.addOns = state.addOns.filter(item => item.name !== payload.name) || []
+            if (payload.fee) {
+                state.addOns = [...state.addOns, payload]
+            }
         }
+
 
     },
 
@@ -87,10 +78,8 @@ export const quoteSlice = createSlice({
 })
 
 export const {
-    setStartDate,
-    setEndDate,
-    setStartTime,
-    setEndTime,
+    setTotalDays,
+    setTotalHours,
     setSecurityFee,
     setEventWorkerFee,
     addAddOn,
@@ -106,5 +95,5 @@ export const {
     setFacilityRentalRate,
     calculateFacilityCost,
     calculateWorkerFee,
-    calculateTotalDaysAndTime
+    updateAddon
 } = quoteSlice.actions
